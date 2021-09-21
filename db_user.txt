@@ -1,0 +1,4 @@
+host:test.ceryx5ob9x7b.us-east-2.rds.amazonaws.com
+Port:3306
+user:admin
+pass:yoddoy1234
