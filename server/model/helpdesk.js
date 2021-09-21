@@ -12,7 +12,13 @@ model.listTicket = async function (trx,query){
     return rows
 }
 
-model.addTicket = async (trx,param) =>{
-    await trx('ticket').insert(param)
+model.addTicket = async (trx,ticket) =>{
+    await trx('ticket').insert(ticket)
+    return 0
+}
+
+model.updateTicket = async function (trx,ticket){
+    await trx('ticket').update({title:ticket.title,description:ticket.description,contract_info:ticket.contract_info
+    ,status:ticket.status}).where({id:ticket.id})
     return 0
 }
