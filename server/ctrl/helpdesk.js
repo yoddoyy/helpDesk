@@ -46,6 +46,7 @@ ctrl.getTicket = async function(req, res) {
 }
 
 ctrl.saveTicket = async function(req, res){
+    console.log('AAAAAAAAAAAAAAAAAAA',req.body)
     try {
         let ticket =req.body
         if(ticket.id==0){
