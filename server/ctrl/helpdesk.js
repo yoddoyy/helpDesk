@@ -46,14 +46,12 @@ ctrl.getTicket = async function(req, res) {
 }
 
 ctrl.saveTicket = async function(req, res){
-    console.log('BBBBBBBBBBBBBBBBB',req.body)
     try {
         let ticket =req.body
         if(ticket.id==0){
             delete ticket.id
             await helpdeskModel.addTicket(req.db,ticket)
         }else{
-            console.log('AAAAAAAAAAAAAAAA',ticket)
             await helpdeskModel.updateTicket(req.db,ticket)
         }        
 
