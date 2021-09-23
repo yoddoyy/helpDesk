@@ -7,15 +7,20 @@ module.exports = ctrl
 ctrl.listTicket = async function(req, res) {
     try {     
         let where  
-        if(req.body.status==undefined||req.body.status==''){
+        let order
+        if(req.body.status==undefined||req.body.status==''||req.body.status=='status'){
             where = `where 1=1`
         }else{
             where = `where status = '${req.body.status}'`
         }
+        if(req.body.order==''){
+            order = `id`
+        }else{
+            order = req.body.order
+        }
         let query = `select * from ticket
-            ${where} `
+            ${where} order by ${order} `
         let rows = await helpdeskModel.listTicket(req.db,query)
-
 
         res.send({
             status: true,
@@ -46,7 +51,6 @@ ctrl.getTicket = async function(req, res) {
 }
 
 ctrl.saveTicket = async function(req, res){
-    console.log('AAAAAAAAAAAAAAAAAAA',req.body)
     try {
         let ticket =req.body
         if(ticket.id==0){

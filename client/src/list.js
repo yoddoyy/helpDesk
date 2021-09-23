@@ -4,7 +4,30 @@ import './App.css';
 import Axios from "axios"
 
 export default function List() {
-    const [status, setStatus] = useState('')
+    const [listStatus, setListStatus] = useState('')
+    const [sort, setSort] = useState('')
+    const [listTicket, setListTicket] = useState([])
+    useEffect(() => {
+        Axios.post("http://localhost:3001/api/helpdesk/listTicket", {
+            status:listStatus,
+            order:sort
+        }).then((res)=>{
+            setListTicket(res.data)
+        })
+        
+    }, [listStatus,sort])    
+    // const tableData = ()=>{
+    //     listTicket.map((val)=> {
+    //         return <tr key={val.id}>
+    //             <td>{val.title}</td>
+    //             <td>{val.contract_info}</td>
+    //             <td>{val.description}</td>
+    //             <td>{val.status}</td>
+    //             <td>{val.update_at}</td>
+    //         </tr>
+    //     })
+    // }
+    console.log('AAAAAAAAAAAAAAAAAAAAAA',listTicket)
     return (
         <div>
             <Container>
@@ -15,10 +38,10 @@ export default function List() {
                         <Form.Select
                             aria-label="select"
                             onChange={(e) => {
-                            setStatus(e.target.value);
+                            setListStatus(e.target.value);
                             }}
                         >
-                            <option>status</option>
+                            <option value="status">status</option>
                             <option value="pending">pending</option>
                             <option value="accepted">accepted</option>
                             <option value="resolved">resolved</option>
@@ -29,32 +52,32 @@ export default function List() {
                 <table class="table">
                     <thead>
                         <tr>
-                        <th scope="col">title</th>
-                        <th scope="col">contract</th>
-                        <th scope="col">description</th>
-                        <th scope="col">status</th>
+                            <th scope="col">title</th>
+                            <th scope="col">contract</th>
+                            <th scope="col">description</th>
+                            <th scope="col" onClick={() => {
+                                setSort('status');
+                                }}>status</th>
+                            <th scope="col" onClick={() => {
+                                setSort('update_at');
+                                }}>lastUpdate</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                        </tr>
+                    <tbody>                    
+                    {
+        listTicket.map((val)=> {
+            return (<tr key={val.id}>
+                <td>{val.title}</td>
+                <td>{val.contract_info}</td>
+                <td>{val.description}</td>
+                <td>{val.status}</td>
+                <td>{val.update_at}</td>
+            </tr>)
+        })
+    }
                     </tbody>
                 </table>
+           
             </Container>
         </div>
     )

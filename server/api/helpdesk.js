@@ -6,6 +6,6 @@ const router = express.Router()
 
 module.exports = router
 
-router.get('/listTicket',[bodyParser.json()], helpdeskCtrl.listTicket)
+router.post('/listTicket',[bodyParser.json()], helpdeskCtrl.listTicket)
 router.get('/getTicket',[bodyParser.json()], helpdeskCtrl.getTicket)
 router.post('/saveTicket',[bodyParser.json()], helpdeskCtrl.saveTicket)
