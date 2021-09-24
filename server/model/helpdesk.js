@@ -8,6 +8,7 @@ model.getTicket = async (trx,id) => {
 }
 
 model.listTicket = async function (trx,query){
+    console.log('QQQQQQQQQQQQQQQQQQQ',query)
     let rows = await trx.raw(`${query}`).then(rows=>rows[0])
     return rows
 }

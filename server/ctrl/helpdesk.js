@@ -21,7 +21,7 @@ ctrl.listTicket = async function(req, res) {
         let query = `select * from ticket
             ${where} order by ${order} `
         let rows = await helpdeskModel.listTicket(req.db,query)
-
+        console.log('RRRRRRRRRRRRRRRRR',rows)
         res.send({
             status: true,
             data: rows

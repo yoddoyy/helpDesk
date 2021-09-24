@@ -14,12 +14,12 @@ import {Navbar,Nav,Container} from 'react-bootstrap'
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home" 
+              <Nav.Link href="" 
               onClick={(e) => { 
                 setPage(<Ticket/>);
               }}>Ticket
               </Nav.Link>
-              <Nav.Link href="#link" onClick={(e) => { 
+              <Nav.Link href="" onClick={(e) => { 
                 setPage(<List/>);
               }}>List</Nav.Link>              
             </Nav>

@@ -12,7 +12,8 @@ export default function List() {
             status:listStatus,
             order:sort
         }).then((res)=>{
-            setListTicket(res.data)
+            console.log('WWWWWWWWWWWWWWWWWWWW',res.data)
+            setListTicket(res.data.data)
         })
         
     }, [listStatus,sort])    
@@ -61,20 +62,24 @@ export default function List() {
                             <th scope="col" onClick={() => {
                                 setSort('update_at');
                                 }}>lastUpdate</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>                    
                     {
-        listTicket.map((val)=> {
-            return (<tr key={val.id}>
-                <td>{val.title}</td>
-                <td>{val.contract_info}</td>
-                <td>{val.description}</td>
-                <td>{val.status}</td>
-                <td>{val.update_at}</td>
-            </tr>)
-        })
-    }
+                        listTicket.map((val)=> {
+                            return (<tr key={val.id}>
+                                <td>{val.title}</td>
+                                <td>{val.contract_info}</td>
+                                <td>{val.description}</td>
+                                <td>{val.status}</td>
+                                <td>{val.update_at}</td>
+                                <td>
+                                    <button>edit</button>
+                                </td>
+                                </tr>)
+                        })
+                    }
                     </tbody>
                 </table>
            
