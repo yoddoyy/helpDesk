@@ -15,13 +15,15 @@ ctrl.listTicket = async function(req, res) {
         }
         if(req.body.order==''){
             order = `id`
+        }else if(req.body.order=='update_at'){
+            order = `${req.body.order} desc`
         }else{
             order = req.body.order
         }
-        let query = `select * from ticket
-            ${where} order by ${order} `
+        let query = `select id,title,description,contract_info,status
+            ,ADDTIME(DATE_FORMAT(update_at,"%Y-%m-%d %H:%i:%s"),"7:00:00") update_at 
+            from ticket ${where} order by ${order} `
         let rows = await helpdeskModel.listTicket(req.db,query)
-        console.log('RRRRRRRRRRRRRRRRR',rows)
         res.send({
             status: true,
             data: rows

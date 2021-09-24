@@ -2,6 +2,7 @@ import React, {useState,useEffect} from "react"
 import {Button,Col,Container,Table, Row,Form} from 'react-bootstrap'
 import './App.css';
 import Axios from "axios"
+import { Link } from 'react-router-dom'
 
 export default function List() {
     const [listStatus, setListStatus] = useState('')
@@ -12,7 +13,6 @@ export default function List() {
             status:listStatus,
             order:sort
         }).then((res)=>{
-            console.log('WWWWWWWWWWWWWWWWWWWW',res.data)
             setListTicket(res.data.data)
         })
         
@@ -28,7 +28,6 @@ export default function List() {
     //         </tr>
     //     })
     // }
-    console.log('AAAAAAAAAAAAAAAAAAAAAA',listTicket)
     return (
         <div>
             <Container>
@@ -56,10 +55,10 @@ export default function List() {
                             <th scope="col">title</th>
                             <th scope="col">contract</th>
                             <th scope="col">description</th>
-                            <th scope="col" onClick={() => {
+                            <th style={{cursor:'pointer'}} scope="col" title='sort by status' onClick={() => {
                                 setSort('status');
                                 }}>status</th>
-                            <th scope="col" onClick={() => {
+                            <th style={{cursor:'pointer'}} scope="col" title='sort by last update' onClick={() => {
                                 setSort('update_at');
                                 }}>lastUpdate</th>
                             <th></th>
@@ -75,7 +74,7 @@ export default function List() {
                                 <td>{val.status}</td>
                                 <td>{val.update_at}</td>
                                 <td>
-                                    <button>edit</button>
+                                    <button ><Link to={`/ticket/${val.id}`}>edit</Link></button>
                                 </td>
                                 </tr>)
                         })
