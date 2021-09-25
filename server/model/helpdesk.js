@@ -3,8 +3,10 @@ const model = {}
 module.exports = model
 
 model.getTicket = async (trx,id) => {
-  let row = await trx('ticket').where({id:id})
-  return row
+  let data = await trx.raw(`select id,title,contract_info,description,status
+  ,ADDTIME(DATE_FORMAT(update_at,"%Y-%m-%d %H:%i:%s"),"7:00:00") update_at
+  from ticket where id = ${id}`).then(data=>data[0][0])
+  return data
 }
 
 model.listTicket = async function (trx,query){

@@ -10,17 +10,26 @@ export default function Ticket() {
   const [contract, setContract] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
-  const [ticketDetail, setTicketDetail] = useState({})
-  let aaa = props.match.param.id
-  // useEffect(() => {
-  //   Axios.post("http://localhost:3001/api/helpdesk/getTicket", {
-  //       id:props.match.param.id
-  //   }).then((res)=>{
-  //       console.log('AAAAAAAAAAAAAAAAAAAAAAAA',res.data)
-  //       setTicketDetail(res.data.data)
-  //   })
-    
-  // }, [])
+  const tid = useParams().tid
+  const [ticketTitle, setTicketTitle] = useState("")
+  const [ticketContract, setTicketContract] = useState("")
+  const [ticketDescription, setTicketDescription] = useState("")
+  const [ticketStatus, setTicketStatus] = useState("")
+  const [updateAt, setUpdateAt] = useState("")
+  
+  useEffect(() => {    
+    Axios.get(`http://localhost:3001/api/helpdesk/getTicket?id=${tid}`)
+    .then((res)=>{
+      if(res.data.data!==undefined){
+        setTicketTitle(res.data.data.title)
+        setTicketContract(res.data.data.contract_info)
+        setTicketDescription(res.data.data.description)
+        setTicketStatus(res.data.data.status)
+        setUpdateAt(res.data.data.update_at)
+        setId(tid)
+      }
+    })       
+  }, [tid])
   
   const submitForm = () => {
     Axios.post("http://localhost:3001/api/helpdesk/saveTicket", {
@@ -30,7 +39,11 @@ export default function Ticket() {
       description: description,
       status: status,
     }).then(() => {
-      alert("insert success");
+      if(id===0){
+        alert("insert success");
+      }else{
+        alert("update success");
+      }      
     });
   };
 
@@ -45,7 +58,7 @@ export default function Ticket() {
             <Form.Control
               type="text"
               name="title"
-              value={title}
+              value={ticketTitle}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
@@ -56,7 +69,7 @@ export default function Ticket() {
             <Form.Control
               type="text"
               name="contract"
-              value={contract}
+              value={ticketContract}
               onChange={(e) => {
                 setContract(e.target.value);
               }}
@@ -68,19 +81,28 @@ export default function Ticket() {
               as="textarea"
               rows={3}
               name="description"
-              value={description}
+              value={ticketDescription}
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="update_at">
+            <Form.Label>update at</Form.Label>
+            <Form.Control
+              type="text"
+              name="update_at"
+              value={updateAt}              
+            />
+          </Form.Group>
+          <Form.Label>status</Form.Label>
           <Form.Select
             aria-label="select"
             onChange={(e) => {
               setStatus(e.target.value);
             }}
           >
-            <option value={status}>status</option>
+            <option value={ticketStatus}>{ticketStatus}</option>
             <option value="pending">pending</option>
             <option value="accepted">accepted</option>
             <option value="resolved">resolved</option>

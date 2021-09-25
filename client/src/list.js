@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from "react"
-import {Button,Col,Container,Table, Row,Form} from 'react-bootstrap'
+import {Col,Container,Row,Form} from 'react-bootstrap'
 import './App.css';
 import Axios from "axios"
 import { Link } from 'react-router-dom'
@@ -17,17 +17,7 @@ export default function List() {
         })
         
     }, [listStatus,sort])    
-    // const tableData = ()=>{
-    //     listTicket.map((val)=> {
-    //         return <tr key={val.id}>
-    //             <td>{val.title}</td>
-    //             <td>{val.contract_info}</td>
-    //             <td>{val.description}</td>
-    //             <td>{val.status}</td>
-    //             <td>{val.update_at}</td>
-    //         </tr>
-    //     })
-    // }
+
     return (
         <div>
             <Container>
@@ -67,21 +57,24 @@ export default function List() {
                     <tbody>                    
                     {
                         listTicket.map((val)=> {
-                            return (<tr key={val.id}>
+                            return (
+                                <tr key={val.id}>
                                 <td>{val.title}</td>
                                 <td>{val.contract_info}</td>
                                 <td>{val.description}</td>
                                 <td>{val.status}</td>
                                 <td>{val.update_at}</td>
                                 <td>
-                                    <button ><Link to={`/ticket/${val.id}`}>edit</Link></button>
+                                    <button >
+                                        <Link to={`/ticket/${val.id}`}>edit</Link>
+                                    </button>
                                 </td>
-                                </tr>)
+                                </tr>
+                            )
                         })
                     }
                     </tbody>
-                </table>
-           
+                </table>           
             </Container>
         </div>
     )
