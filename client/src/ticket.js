@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, Container } from "react-bootstrap";
-import "./App.css";
-import Axios from "axios";
+import React, { useState, useEffect } from "react"
+import { Button, Form, Container } from "react-bootstrap"
+import "./App.css"
+import Axios from "axios"
 import {useParams} from 'react-router-dom'
 
 export default function Ticket() {
-  const [id, setId] = useState(0);
-  const [title, setTitle] = useState("");
-  const [contract, setContract] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
+
   const tid = useParams().tid
+  const [id, setId] = useState(0);
   const [ticketTitle, setTicketTitle] = useState("")
   const [ticketContract, setTicketContract] = useState("")
   const [ticketDescription, setTicketDescription] = useState("")
@@ -27,25 +24,44 @@ export default function Ticket() {
         setTicketStatus(res.data.data.status)
         setUpdateAt(res.data.data.update_at)
         setId(tid)
+      }else{
+        setTicketTitle("")
+        setTicketContract("")
+        setTicketDescription("")
+        setTicketStatus("")
+        setUpdateAt("")
+        setId(0)
       }
     })       
   }, [tid])
   
-  const submitForm = () => {
-    Axios.post("http://localhost:3001/api/helpdesk/saveTicket", {
-      id: id,
-      title: title,
-      contract_info: contract,
-      description: description,
-      status: status,
-    }).then(() => {
+  const submitForm = async function (e) {
+    e.preventDefault()
+    try{
+      await Axios.post("http://localhost:3001/api/helpdesk/saveTicket", {
+        id: id,
+        title: ticketTitle,
+        contract_info: ticketContract,
+        description: ticketDescription,
+        status: ticketStatus,
+      } )
       if(id===0){
-        alert("insert success");
+        alert("insert success")
       }else{
-        alert("update success");
-      }      
-    });
-  };
+        alert("update success")
+      }    
+    
+      setTicketTitle("")
+      setTicketContract("")
+      setTicketDescription("")
+      setTicketStatus("")
+      setUpdateAt("")
+      setId(0)
+            
+    }catch(err){
+      alert(err)
+    }
+  }
 
   return (
     <div>
@@ -60,7 +76,7 @@ export default function Ticket() {
               name="title"
               value={ticketTitle}
               onChange={(e) => {
-                setTitle(e.target.value);
+                setTicketTitle(e.target.value)
               }}
             />
           </Form.Group>
@@ -71,7 +87,7 @@ export default function Ticket() {
               name="contract"
               value={ticketContract}
               onChange={(e) => {
-                setContract(e.target.value);
+                setTicketContract(e.target.value)
               }}
             />
           </Form.Group>
@@ -83,7 +99,7 @@ export default function Ticket() {
               name="description"
               value={ticketDescription}
               onChange={(e) => {
-                setDescription(e.target.value);
+                setTicketDescription(e.target.value)
               }}
             />
           </Form.Group>
@@ -97,9 +113,10 @@ export default function Ticket() {
           </Form.Group>
           <Form.Label>status</Form.Label>
           <Form.Select
+            value={ticketStatus}
             aria-label="select"
             onChange={(e) => {
-              setStatus(e.target.value);
+              setTicketStatus(e.target.value)
             }}
           >
             <option value={ticketStatus}>{ticketStatus}</option>
@@ -109,11 +126,11 @@ export default function Ticket() {
             <option value="rejected">rejected</option>
           </Form.Select>
           <br />
-          <Button variant="primary" type="submit" onClick={submitForm}>
+          <Button variant="primary" type="submit" onClick={(e)=>submitForm(e)}>
             Submit
           </Button>
         </Form>
       </Container>
     </div>
-  );
+  )
 }

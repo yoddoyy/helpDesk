@@ -37,7 +37,6 @@ ctrl.listTicket = async function(req, res) {
 }
 
 ctrl.getTicket = async function(req, res){
-    console.log('zzzzzzzzzzzzz',req.query)
     try {        
         let ticket = await helpdeskModel.getTicket(req.db,req.query.id)
 
@@ -54,7 +53,6 @@ ctrl.getTicket = async function(req, res){
 }
 
 ctrl.saveTicket = async function(req, res){
-    console.log('yyyyyyyyyyyyyyy',req.body)
     try {
         let ticket =req.body
         if(ticket.id==0){

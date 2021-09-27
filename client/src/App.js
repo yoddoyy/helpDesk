@@ -29,7 +29,7 @@ import {Route} from 'react-router-dom'
       </div>      
     </div>
     
-  );
+  )
 }
 
 export default App;
