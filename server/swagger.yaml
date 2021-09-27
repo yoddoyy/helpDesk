@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  title: helpdesk API
+  description: swagger API Document
+  version: 0.0.1
+servers:
+  - url: http://localhost:3001/api/helpdesk    
+paths:
+  /getTicket?id={id}:
+    get:
+      get:
+      summary: ticket.
+      description: ticket detail
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ticket id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        '200':    # status code
+          description: "success"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Pet not found"
+  /listTicket:
+    post:
+      post:
+      summary: list
+      description: list ticket
+      parameters:
+      - name: "staus,order"
+        in: "body"
+        description: "{status:pending,order:status}"
+        # # consumes:
+        # # - "application/json"
+        # # - "application/xml"
+        # produces:
+        # - "application/xml"
+        # - "application/json"
+        type: "object"
+        # format: "int64"
+      responses:
+        '200':    # status code
+          description: "success"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Pet not found"

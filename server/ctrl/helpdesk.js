@@ -13,7 +13,7 @@ ctrl.listTicket = async function(req, res) {
         }else{
             where = `where status = '${req.body.status}'`
         }
-        if(req.body.order==''){
+        if(req.body.order==''||req.body.order==undefined){
             order = `id`
         }else if(req.body.order=='update_at'){
             order = `${req.body.order} desc`
