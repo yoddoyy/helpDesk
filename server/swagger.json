@@ -1,0 +1,47 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "helpdesk API",
+        "description": "swagger API Document",
+        "version": "0.0.1"
+    },
+    "servers":[
+        {"url": "http://localhost:3001/api/helpdesk"}
+    ],
+    "paths":{
+        "/getTicket?id={id}":{
+            "get":{
+                "get":"",
+                "summary": "ticket.",
+                "description": "ticket detail",
+                "parameters":
+                    [
+                        {
+                            "name":"id",
+                            "in": "path",
+                            "description": "ticket id",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    ],
+                "responses":{
+                    
+                    "200": {
+                        "description": "success"
+                    }                    
+                }                    
+            }
+        },
+        "listTicket":{
+            
+        }
+    }
+}
+
+    
+        
+
+
+
+

@@ -20,32 +20,65 @@ paths:
         format: "int64"
       responses:
         '200':    # status code
-          description: "success"
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Pet not found"
+          description: "success"        
   /listTicket:
     post:
       post:
       summary: list
       description: list ticket
-      parameters:
-      - name: "staus,order"
-        in: "body"
-        description: "{status:pending,order:status}"
-        # # consumes:
-        # # - "application/json"
-        # # - "application/xml"
-        # produces:
-        # - "application/xml"
-        # - "application/json"
-        type: "object"
-        # format: "int64"
+      requestBody:      
+        description: "{} for all record,status in (pending, accepted, resolved, rejected),order in (status,update_at)"          
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/listticket'
       responses:
         '200':    # status code
           description: "success"
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Pet not found"
+  /saveTicket:      
+    post:
+      post:
+      summary: add or update
+      description: id==0 add new ticket else update by id
+      requestBody:
+        description: status in (pending, accepted, resolved, rejected)       
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ticket'
+      responses:
+        '200':    # status code
+          description: "success"
+
+definitions:  
+
+  ticket:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: ticket id
+      title:
+        type: string
+        description:  title
+      contract_info:
+        type: string
+        description: contract infomation
+      description:
+        type: string
+        description: description
+      status:
+        type: string
+        description: status    
+  
+  listticket:
+    type: object
+    properties:
+      status:
+        type: string
+        description: pending, accepted, resolved, rejected
+      order:
+        type: string
+        description: status, update_at
